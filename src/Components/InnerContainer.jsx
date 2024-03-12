@@ -1,4 +1,4 @@
-import style from './innercontainer.module.css'
+import style from './innercontainer.module.css';
 
 export default function InnerContainer({ children }) {
 
@@ -7,4 +7,4 @@ export default function InnerContainer({ children }) {
             {children}
         </div>
     )
-}
+};
