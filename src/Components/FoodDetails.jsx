@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import style from './fooddetails.module.css';
+import ItemList from "./ItemList";
 
 export default function FoodDetails({ foodId }) {
     const [food, setFood] = useState({});
@@ -18,27 +20,30 @@ export default function FoodDetails({ foodId }) {
 
     return(
         <div>
-            <div>
-                <h1>{food.title}</h1>
-                <img src={food.image} alt="" />
-                <div>
+            <div className={style.recipeCard}>
+                <h1 className={style.recipeName}>{food.title}</h1>
+                <img className={style.recipeImg} src={food.image} alt="" />
+                <div className={style.recipeDetails}>
                     <span><strong>⏰ {food.readyInMinutes} minutes</strong></span>
                     <span><strong>👨‍👩‍👧‍👦 Serves {food.servings}</strong></span>
-                    <span>{food.vegetarian ? "🥦 Vegetarian" : "🥩 Non-Vegetarian"}</span>
-                    <span>{food.vegan ? "🐮 Vegan" : ""}</span>
+                    <span><strong>{food.vegetarian ? "🥦 Vegetarian" : "🥩 Non-Vegetarian"}</strong></span>
+                    <span><strong>{food.vegan ? "🐮 Vegan" : ""}</strong></span>
                 </div>
                 <div>
-                    <span>${food.pricePerServing/100} Per serving</span>
+                    <span><strong>${food.pricePerServing/100} Per serving</strong></span>
                 </div>
-            </div>
 
-            <div>
+                <ItemList food={food} isLoading={isLoading} />
                 <h2>Instructions</h2>
-                {isLoading 
-                ? <p>Gathering the data...</p> 
-                : food.analyzedInstructions[0].steps.map((step) => (
-                    <li>{step.step}</li>
-                ))};
+                <div className={style.recipeInstructions}>
+                    <ol>
+                        {isLoading ?
+                        <p>Gathering the data...</p> 
+                        : food.analyzedInstructions[0].steps.map((step) => (
+                            <li>{step.step}</li>
+                        ))}
+                    </ol>
+                </div>
             </div>
         </div>
     )
